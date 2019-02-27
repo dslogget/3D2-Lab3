@@ -1,0 +1,5 @@
+Dependencies for Project 'App', Target 'Sample': (DO NOT MODIFY !)
+F (.\App.s)(0x5C76A898)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\Philips--pd "__UVISION_VERSION SETA 516"--list .\listings\app.lst --xref -o .\app.o --depend .\app.d)
+F (.\RKP.s)(0x5C7671DE)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\Philips--pd "__UVISION_VERSION SETA 516"--list .\listings\rkp.lst --xref -o .\rkp.o --depend .\rkp.d)
+F (.\PIN_DEFS.s)(0x5C753D4A)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\Philips--pd "__UVISION_VERSION SETA 516"--list .\listings\pin_defs.lst --xref -o .\pin_defs.o --depend .\pin_defs.d)
+F (.\EA-LPC2138-EDU-ASM.lib)(0x5C4B26AA)()

@@ -1,0 +1,274 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             AsmTemplate, CODE, READONLY
+    2 00000000                 IMPORT           main
+    3 00000000         
+    4 00000000         ; (c) Mike Brady, 2011 -- 2019.
+    5 00000000         
+    6 00000000                 EXPORT           start
+    7 00000000                 IMPORT           ReadKeyPress ;Import subroutine
+                                                             to read keys
+    8 00000000                 IMPORT           IO1DIR
+    9 00000000                 IMPORT           IO1CLR
+   10 00000000                 IMPORT           IO1SET
+   11 00000000         
+   12 00000000         ;Main loop
+   13 00000000         start
+   14 00000000         ;val in R5 = value to display
+   15 00000000         
+   16 00000000 E3A05000        LDR              R5, =0
+   17 00000004 E59F10C0        LDR              R1, =IO1DIR
+   18 00000008 E5912000        LDR              R2, [R1]
+   19 0000000C E382280F        ORR              R2, #(2_1111<<16)
+   20 00000010 E5812000        STR              R2, [R1]
+   21 00000014 E59F10B4        LDR              R1, =IO1SET
+   22 00000018 E3A0480F        LDR              R4, =(2_1111 << 16)
+   23 0000001C E5814000        STR              R4, [R1]
+   24 00000020         
+   25 00000020         
+   26 00000020         
+   27 00000020         LPST
+   28 00000020 E3A02000        LDR              R2, =0
+   29 00000024         
+   30 00000024         
+   31 00000024 EBFFFFFE        BL               ReadKeyPress
+   32 00000028         
+   33 00000028         ;Switch statement for button presses
+   34 00000028 E3500014        CMP              R0, #20
+   35 0000002C 0A00000D        BEQ              CASE1
+   36 00000030 E3700014        CMP              R0, #-20
+   37 00000034 0A000011        BEQ              CASE1L
+   38 00000038 E3500015        CMP              R0, #21
+   39 0000003C 0A00000C        BEQ              CASE2
+   40 00000040 E3700015        CMP              R0, #-21
+   41 00000044 0A00000F        BEQ              CASE2L
+   42 00000048 E3500016        CMP              R0, #22
+   43 0000004C 0A00000F        BEQ              DEFAULT
+   44 00000050 E3700016        CMP              R0, #-22
+   45 00000054 0A00000D        BEQ              DEFAULT
+   46 00000058 E3500017        CMP              R0, #23
+   47 0000005C 0A00000B        BEQ              DEFAULT
+   48 00000060 E3700017        CMP              R0, #-23
+   49 00000064 0A000009        BEQ              DEFAULT
+   50 00000068         
+   51 00000068         CASE1
+   52 00000068 E2855201        ADD              R5, R5, #(2_1 << 28)
+   53 0000006C E1A03E25        LSR              R3, R5, #28
+   54 00000070 EA000006        B                SwitchEnd
+   55 00000074         CASE2
+   56 00000074 E2455201        SUB              R5, R5, #(2_1 << 28)
+   57 00000078 E1A03E25        LSR              R3, R5, #28
+   58 0000007C EA000003        B                SwitchEnd
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   59 00000080         CASE1L
+   60 00000080 E3A0300F        LDR              R3, =2_1111
+   61 00000084 EA000001        B                SwitchEnd
+   62 00000088         CASE2L
+   63 00000088 E3A0300F        LDR              R3, =2_1111
+   64 0000008C EAFFFFFF        B                SwitchEnd
+   65 00000090         CASE3
+   66 00000090         CASE4
+   67 00000090         DEFAULT
+   68 00000090         SwitchEnd
+   69 00000090         
+   70 00000090         
+   71 00000090         
+   72 00000090         
+   73 00000090         
+   74 00000090         
+   75 00000090         
+   76 00000090         
+   77 00000090         ;Display to LEDs
+   78 00000090         
+   79 00000090 E3130008        TST              R3, #2_1000
+   80 00000094 13822001        ORRNE            R2, #2_0001
+   81 00000098 E3130004        TST              R3, #2_0100
+   82 0000009C 13822002        ORRNE            R2, #2_0010
+   83 000000A0 E3130002        TST              R3, #2_0010
+   84 000000A4 13822004        ORRNE            R2, #2_0100
+   85 000000A8 E3130001        TST              R3, #2_0001
+   86 000000AC 13822008        ORRNE            R2, #2_1000
+   87 000000B0 E59F1018        LDR              R1, =IO1SET
+   88 000000B4 E3A0480F        LDR              R4, =(2_1111 << 16)
+   89 000000B8 E5814000        STR              R4, [R1]
+   90 000000BC E59F1010        LDR              R1, =IO1CLR
+   91 000000C0 E1A02802        LSL              R2, #16
+   92 000000C4 E5812000        STR              R2, [R1]
+   93 000000C8         
+   94 000000C8         
+   95 000000C8 EAFFFFD4        B                LPST
+   96 000000CC         
+   97 000000CC         
+   98 000000CC                 END
+              00000000 
+              00000000 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\a
+pp.d -o.\app.o -IC:\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Ke
+il_v5\ARM\Inc\Philips --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 
+1" --predefine="__UVISION_VERSION SETA 516" --list=.\listings\app.lst App.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+AsmTemplate 00000000
+
+Symbol: AsmTemplate
+   Definitions
+      At line 1 in file App.s
+   Uses
+      None
+Comment: AsmTemplate unused
+CASE1 00000068
+
+Symbol: CASE1
+   Definitions
+      At line 51 in file App.s
+   Uses
+      At line 35 in file App.s
+Comment: CASE1 used once
+CASE1L 00000080
+
+Symbol: CASE1L
+   Definitions
+      At line 59 in file App.s
+   Uses
+      At line 37 in file App.s
+Comment: CASE1L used once
+CASE2 00000074
+
+Symbol: CASE2
+   Definitions
+      At line 55 in file App.s
+   Uses
+      At line 39 in file App.s
+Comment: CASE2 used once
+CASE2L 00000088
+
+Symbol: CASE2L
+   Definitions
+      At line 62 in file App.s
+   Uses
+      At line 41 in file App.s
+Comment: CASE2L used once
+CASE3 00000090
+
+Symbol: CASE3
+   Definitions
+      At line 65 in file App.s
+   Uses
+      None
+Comment: CASE3 unused
+CASE4 00000090
+
+Symbol: CASE4
+   Definitions
+      At line 66 in file App.s
+   Uses
+      None
+Comment: CASE4 unused
+DEFAULT 00000090
+
+Symbol: DEFAULT
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+   Definitions
+      At line 67 in file App.s
+   Uses
+      At line 43 in file App.s
+      At line 45 in file App.s
+      At line 47 in file App.s
+      At line 49 in file App.s
+
+LPST 00000020
+
+Symbol: LPST
+   Definitions
+      At line 27 in file App.s
+   Uses
+      At line 95 in file App.s
+Comment: LPST used once
+SwitchEnd 00000090
+
+Symbol: SwitchEnd
+   Definitions
+      At line 68 in file App.s
+   Uses
+      At line 54 in file App.s
+      At line 58 in file App.s
+      At line 61 in file App.s
+      At line 64 in file App.s
+
+start 00000000
+
+Symbol: start
+   Definitions
+      At line 13 in file App.s
+   Uses
+      At line 6 in file App.s
+Comment: start used once
+11 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+IO1CLR 00000000
+
+Symbol: IO1CLR
+   Definitions
+      At line 9 in file App.s
+   Uses
+      At line 90 in file App.s
+Comment: IO1CLR used once
+IO1DIR 00000000
+
+Symbol: IO1DIR
+   Definitions
+      At line 8 in file App.s
+   Uses
+      At line 17 in file App.s
+Comment: IO1DIR used once
+IO1SET 00000000
+
+Symbol: IO1SET
+   Definitions
+      At line 10 in file App.s
+   Uses
+      At line 21 in file App.s
+      At line 87 in file App.s
+
+ReadKeyPress 00000000
+
+Symbol: ReadKeyPress
+   Definitions
+      At line 7 in file App.s
+   Uses
+      At line 31 in file App.s
+Comment: ReadKeyPress used once
+main 00000000
+
+Symbol: main
+   Definitions
+      At line 2 in file App.s
+   Uses
+      None
+Comment: main unused
+5 symbols
+351 symbols in table
