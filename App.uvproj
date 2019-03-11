@@ -424,6 +424,11 @@
               <FileType>2</FileType>
               <FilePath>.\RKP.s</FilePath>
             </File>
+            <File>
+              <FileName>Display.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Display.s</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

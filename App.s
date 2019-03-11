@@ -8,6 +8,7 @@
 	IMPORT IO1DIR
 	IMPORT IO1CLR
 	IMPORT IO1SET
+	IMPORT Display
 
 ;Main loop
 start
@@ -76,20 +77,9 @@ SwitchEnd
 
 ;Display to LEDs
 
-	TST R3, #2_1000
-	ORRNE R2, #2_0001
-	TST R3, #2_0100
-	ORRNE R2, #2_0010
-	TST R3, #2_0010
-	ORRNE R2, #2_0100
-	TST R3, #2_0001
-	ORRNE R2, #2_1000
-	LDR R1, =IO1SET
-	LDR R4, =(2_1111 << 16)
-	STR R4, [R1]
-	LDR R1, =IO1CLR
-	LSL R2, #16
-	STR R2, [R1]
+	MOV R1, R3
+	
+	BL Display
 	
 	
 	B LPST
