@@ -41,9 +41,9 @@ Y
    28 00000000         
    29 00000000         
    30 00000000         ReadKeyPress
-   31 00000000 E92D5FFE        STMFD            sp!,  {R1-R12, lr} ;Store all r
-                                                            egisters that don't
-                                                             return a value
+   31 00000000 E92D407E        STMFD            sp!,  {R1-R6, lr} ;Store all re
+                                                            gisters that don't 
+                                                            return a value
    32 00000004         
    33 00000004 E59F6098        LDR              R6,  =RKP_LONGPRESS
    34 00000008         
@@ -114,7 +114,7 @@ ARM Macro Assembler    Page 2
    89 000000A0         
    90 000000A0         
    91 000000A0         RKP_cntend
-   92 000000A0 E8BD9FFE        LDMFD            sp!,  {R1-R12, pc}
+   92 000000A0 E8BD807E        LDMFD            sp!,  {R1-R6, pc}
    93 000000A4         
    94 000000A4         
    95 000000A4                 END
