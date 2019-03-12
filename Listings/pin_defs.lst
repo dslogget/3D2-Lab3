@@ -37,8 +37,8 @@ ARM Macro Assembler    Page 1
    23 00000000                 END
 Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\p
 in_defs.d -o.\pin_defs.o -IC:\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Inclu
-de -IC:\Keil_v5\ARM\Inc\Philips --predefine="__EVAL SETA 1" --predefine="__MICR
-OLIB SETA 1" --predefine="__UVISION_VERSION SETA 516" --list=.\listings\pin_def
+de -IC:\Keil_v5\ARM\INC\Philips --predefine="__EVAL SETA 1" --predefine="__MICR
+OLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --list=.\listings\pin_def
 s.lst PIN_DEFS.s
 
 

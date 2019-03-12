@@ -8,6 +8,7 @@
 	IMPORT IO1DIR
 	IMPORT IO1CLR
 	IMPORT IO1SET
+	IMPORT Display
 
 ;Main loop
 start
@@ -65,7 +66,7 @@ CASE2
 	B SwitchEnd
 	
 	
-CASE34
+CASE3
 	LDR R7, [R12], #4					;Pop stack counter from stack
 	CMP R7, #2
 	BGE OPERATE							;Check if there is a number and an operator in the stack
