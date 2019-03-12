@@ -1,0 +1,8 @@
+--cpu ARM7TDMI
+".\app.o"
+".\rkp.o"
+".\display.o"
+".\pin_defs.o"
+".\EA-LPC2138-EDU-ASM.lib"
+--library_type=microlib --strict --scatter ".\App.sct"
+--summary_stderr --info summarysizes -o .\App.axf
