@@ -7,7 +7,7 @@
 	EXPORT Display
 	
 Display
-	STMFD 	sp!, 	{R0, R2-R12, lr}				;Store all registers that don't return a value
+	STMFD 	sp!, 	{R0, R2-R4, lr}				;Store all registers that don't return a value
 	LDR R2, =(2_1111 << 16)
 	LDR R0, =IO1DIR
 	STR R2, [R0]
@@ -26,7 +26,7 @@ Display
 	LDR R0, =IO1CLR
 	LSL R2, #16
 	STR R2, [R0]
-	LDMFD 	sp!, 	{R1-R12, pc}
+	LDMFD 	sp!, 	{R0, R2-R4, pc}
 	
 	
 	END
