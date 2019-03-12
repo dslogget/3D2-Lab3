@@ -28,7 +28,7 @@ RKP_LONGPRESS 	EQU  	800000
 		
 		
 ReadKeyPress
-		STMFD 	sp!, 	{R1-R12, lr}				;Store all registers that don't return a value
+		STMFD 	sp!, 	{R1-R6, lr}				;Store all registers that don't return a value
 	
 		LDR 	R6, 	=RKP_LONGPRESS
 	
@@ -89,7 +89,7 @@ RKP_wait
 		
 		
 RKP_cntend	
-		LDMFD 	sp!, 	{R1-R12, pc}
+		LDMFD 	sp!, 	{R1-R6, pc}
 
 
 	END

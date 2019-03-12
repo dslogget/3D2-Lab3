@@ -8,6 +8,7 @@
 	IMPORT IO1DIR
 	IMPORT IO1CLR
 	IMPORT IO1SET
+	IMPORT Display
 
 ;Main loop
 start
@@ -24,7 +25,7 @@ start
 	
 	
 	MOV R7, #0							;Initialising stack counter (doesn't include itself)
-	LDR R12, =0xA1002400				;Initialising stack pointer
+	LDR R12, =STK_TOP					;Initialising stack pointer
 	STR R7, [R12, #-4]!					;Adding stack counter to top of stack
 	
 	
@@ -65,7 +66,7 @@ CASE2
 	B SwitchEnd
 	
 	
-CASE34
+CASE3
 	LDR R7, [R12], #4					;Pop stack counter from stack
 	CMP R7, #2
 	BGE OPERATE							;Check if there is a number and an operator in the stack
@@ -79,14 +80,16 @@ CASE34
 		
 	
 CASE3L
-	STMFD sp!, {R2}						;Store previous values
+
 	MOV R7, #0							;Zero stack counter
-	LDR R2, [R12], #4					;Pop operator from stack
+	LDR R5, [R12], #4					;Pop operator from stack
 	LDR R5, [R12], #4					;Pop num1 from stack
 	STR R7, [R12, #-4]!					;Store stack counter
 	LSR R3, R5, #28						;Store for display
-	LDMFD sp!, {R2}						;Restore to previous values
-	B SwitchEnd							;Display Result
+	MOV R1, R3							;Set to display output
+	BL Display
+	BL ReadKeyPress						;Get new operator
+	B CASE3								;After input is received go to operation function
 
 CASE4L
 	STMFD sp!, {R2}						;Store previous values
@@ -116,7 +119,20 @@ OPERATE
 	STR R5, [R12, #-4]!					;Store output
 	LSR R3, R5, #28						;Store for display
 	STR R7, [R12, #-4]!					;Store stack counter
-	MOV R5, #0							;Reset R5
+	;MOV R5, #0							;Reset R5
+	MOV R0, #0							;Reset R0
+	
+	MOV R1, R3							;Set to display output
+	BL Display
+	
+OPERATELOOP								;Loop until 20/21 is pressed
+	BL ReadKeyPress						;Set R0 to +-{20-23}
+	CMP R0, #20
+	BEQ OPERATEOUT						;Check if input = 20
+	CMP R0, #21
+	BEQ OPERATEOUT						;Check if input = 21
+	B OPERATELOOP						;Else try again
+OPERATEOUT
 	LDMFD sp!, {R1,R2,R4}				;Restore to previous values
 	B SwitchEnd
 
@@ -150,5 +166,8 @@ SwitchEnd
 	
 	B LPST
 	
+
+	AREA	STK, CODE, READWRITE
+STK_TOP 	SPACE	256
 
 	END
