@@ -8,6 +8,10 @@
 	
 Display
 	STMFD 	sp!, 	{R0, R2-R12, lr}				;Store all registers that don't return a value
+	LDR R2, =(2_1111 << 16)
+	LDR R0, =IO1DIR
+	STR R2, [R0]
+	LDR R2, =0
 	TST R1, #2_1000
 	ORRNE R2, #2_0001
 	TST R1, #2_0100

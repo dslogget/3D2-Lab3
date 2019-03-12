@@ -17,30 +17,35 @@ ARM Macro Assembler    Page 1
                                                             ll registers that d
                                                             on't return a value
                                                             
-   11 00000004 E3110008        TST              R1, #2_1000
-   12 00000008 13822001        ORRNE            R2, #2_0001
-   13 0000000C E3110004        TST              R1, #2_0100
-   14 00000010 13822002        ORRNE            R2, #2_0010
-   15 00000014 E3110002        TST              R1, #2_0010
-   16 00000018 13822004        ORRNE            R2, #2_0100
-   17 0000001C E3110001        TST              R1, #2_0001
-   18 00000020 13822008        ORRNE            R2, #2_1000
-   19 00000024 E59F0014        LDR              R0, =IO1SET
-   20 00000028 E3A0480F        LDR              R4, =(2_1111 << 16)
-   21 0000002C E5804000        STR              R4, [R0]
-   22 00000030 E59F000C        LDR              R0, =IO1CLR
-   23 00000034 E1A02802        LSL              R2, #16
-   24 00000038 E5802000        STR              R2, [R0]
-   25 0000003C E8BD9FFE        LDMFD            sp!,  {R1-R12, pc}
-   26 00000040         
-   27 00000040         
-   28 00000040                 END
+   11 00000004 E3A0280F        LDR              R2, =(2_1111 << 16)
+   12 00000008 E59F0040        LDR              R0, =IO1DIR
+   13 0000000C E5802000        STR              R2, [R0]
+   14 00000010 E3A02000        LDR              R2, =0
+   15 00000014 E3110008        TST              R1, #2_1000
+   16 00000018 13822001        ORRNE            R2, #2_0001
+   17 0000001C E3110004        TST              R1, #2_0100
+   18 00000020 13822002        ORRNE            R2, #2_0010
+   19 00000024 E3110002        TST              R1, #2_0010
+   20 00000028 13822004        ORRNE            R2, #2_0100
+   21 0000002C E3110001        TST              R1, #2_0001
+   22 00000030 13822008        ORRNE            R2, #2_1000
+   23 00000034 E59F0018        LDR              R0, =IO1SET
+   24 00000038 E3A0480F        LDR              R4, =(2_1111 << 16)
+   25 0000003C E5804000        STR              R4, [R0]
+   26 00000040 E59F0010        LDR              R0, =IO1CLR
+   27 00000044 E1A02802        LSL              R2, #16
+   28 00000048 E5802000        STR              R2, [R0]
+   29 0000004C E8BD9FFE        LDMFD            sp!,  {R1-R12, pc}
+   30 00000050         
+   31 00000050         
+   32 00000050                 END
+              00000000 
               00000000 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\d
 isplay.d -o.\display.o -IC:\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include
- -IC:\Keil_v5\ARM\INC\Philips --predefine="__EVAL SETA 1" --predefine="__MICROL
-IB SETA 1" --predefine="__UVISION_VERSION SETA 525" --list=.\listings\display.l
+ -IC:\Keil_v5\ARM\Inc\Philips --predefine="__EVAL SETA 1" --predefine="__MICROL
+IB SETA 1" --predefine="__UVISION_VERSION SETA 516" --list=.\listings\display.l
 st Display.s
 
 
@@ -77,7 +82,7 @@ Symbol: IO1CLR
    Definitions
       At line 3 in file Display.s
    Uses
-      At line 22 in file Display.s
+      At line 26 in file Display.s
 Comment: IO1CLR used once
 IO1DIR 00000000
 
@@ -85,15 +90,15 @@ Symbol: IO1DIR
    Definitions
       At line 2 in file Display.s
    Uses
-      None
-Comment: IO1DIR unused
+      At line 12 in file Display.s
+Comment: IO1DIR used once
 IO1SET 00000000
 
 Symbol: IO1SET
    Definitions
       At line 4 in file Display.s
    Uses
-      At line 19 in file Display.s
+      At line 23 in file Display.s
 Comment: IO1SET used once
 3 symbols
 340 symbols in table
